@@ -12,6 +12,7 @@ namespace AgendaDB
 {
     public partial class frmContactos : Form
     {
+        
         public frmContactos()
         {
             InitializeComponent();
@@ -85,7 +86,7 @@ namespace AgendaDB
             }
         }
 
-        private void dtvContactos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        public void dtvContactos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -93,6 +94,9 @@ namespace AgendaDB
                 {
                     int contactoId = Convert.ToInt32(dtvContactos.Rows[e.RowIndex].Cells["ContactoId"].Value);
                     frmContacto pantallaContacto = new frmContacto(contactoId);
+
+                    //frmContacto.txtNombre.Text = dtvContactos.Rows[e.RowIndex].Cells["Nombre"].Value.ToString();
+
                     pantallaContacto.ShowDialog();
                     ConsultarContactos();
                 }
@@ -101,6 +105,21 @@ namespace AgendaDB
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Actualizar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dtvContactos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void frmContactos_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

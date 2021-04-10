@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace AgendaDB
 {
@@ -196,6 +197,107 @@ namespace AgendaDB
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+        public SqlDataReader LeerRegistro(int contactoId)
+        {
+            try
+            {
+                string strQuery = "SELECT * FROM Contactos WHERE ContactoId = @ContactoId";
+
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand sqlCommand = new SqlCommand(strQuery, sqlConnection);
+                sqlCommand.CommandType = CommandType.Text;
+
+                sqlCommand.Parameters.AddWithValue("@ContactoId", contactoId);
+
+                sqlConnection.Open();
+                    
+                SqlDataReader registro = sqlCommand.ExecuteReader();
+
+                //sqlConnection.Close();
+                //sqlConnection.Dispose();
+
+                return registro;
+                
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw new Exception(ex.Message);
+            }
+        }
+        public void ActualizarContacto(string nombre, DateTime fechaNacimiento,
+           string email, string telefonoParticular, string telefonoCelular, int contactoId)
+        {
+            try
+            {
+                string strQuery = "UPDATE [Contactos] SET " +
+                    "[FechaCaptura] = GETDATE()," +
+                    "[Nombre] = @Nombre," +
+                    "[FechaNacimiento] = @FechaNacimiento," +
+                    "[Email] = @Email," +
+                    "[TelefonoParticular] = @TelefonoParticular," +
+                    "[TelefonoCelular] = @TelefonoCelular,[Activo]=1 " +
+                    "WHERE [ContactoId] = @ContactoId";
+
+                SqlConnection sqlConnection = new SqlConnection(connectionString);
+                SqlCommand sqlCommand = new SqlCommand(strQuery, sqlConnection);
+                sqlCommand.CommandType = CommandType.Text;
+
+                sqlCommand.Parameters.AddWithValue("@Nombre", nombre);
+                sqlCommand.Parameters.AddWithValue("@FechaNacimiento", fechaNacimiento.ToString("yyyy-MM-dd"));
+                sqlCommand.Parameters.AddWithValue("@Email", email);
+                sqlCommand.Parameters.AddWithValue("@TelefonoParticular", telefonoParticular);
+                sqlCommand.Parameters.AddWithValue("@TelefonoCelular", telefonoCelular);
+                sqlCommand.Parameters.AddWithValue("@ContactoId", contactoId);
+
+                try
+                {
+                    sqlConnection.Open();
+                    sqlCommand.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                    sqlConnection.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void EliminarContacto(int contactoId)
+        {
+            if (MessageBox.Show("Esta Seguro que desea eliminar el Registro?", "Advertencia", MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            {
+                try
+                {
+                    string strQuery = "DELETE FROM Contactos WHERE ContactoId = @ContactoId";
+
+                    SqlConnection sqlConnection = new SqlConnection(connectionString);
+                    SqlCommand sqlCommand = new SqlCommand(strQuery, sqlConnection);
+                    sqlCommand.CommandType = CommandType.Text;
+
+                    sqlCommand.Parameters.AddWithValue("@ContactoId", contactoId);
+
+                    sqlConnection.Open();
+
+                    sqlCommand.ExecuteReader();
+
+                    sqlConnection.Close();
+                    sqlConnection.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
             }
         }
     }

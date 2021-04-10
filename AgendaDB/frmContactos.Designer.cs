@@ -36,6 +36,7 @@ namespace AgendaDB
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnAgregarContacto = new System.Windows.Forms.Button();
+            this.Actualizar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtvContactos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +63,7 @@ namespace AgendaDB
             this.dtvContactos.ReadOnly = true;
             this.dtvContactos.Size = new System.Drawing.Size(810, 394);
             this.dtvContactos.TabIndex = 1;
+            this.dtvContactos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtvContactos_CellClick);
             this.dtvContactos.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dtvContactos_CellDoubleClick);
             // 
             // btnConsutaContactos
@@ -111,11 +113,22 @@ namespace AgendaDB
             this.btnAgregarContacto.UseVisualStyleBackColor = true;
             this.btnAgregarContacto.Click += new System.EventHandler(this.btnAgregarContacto_Click);
             // 
+            // Actualizar
+            // 
+            this.Actualizar.Location = new System.Drawing.Point(12, 478);
+            this.Actualizar.Name = "Actualizar";
+            this.Actualizar.Size = new System.Drawing.Size(125, 23);
+            this.Actualizar.TabIndex = 7;
+            this.Actualizar.Text = "Actualizar Contacto";
+            this.Actualizar.UseVisualStyleBackColor = true;
+            this.Actualizar.Click += new System.EventHandler(this.Actualizar_Click);
+            // 
             // frmContactos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 513);
+            this.Controls.Add(this.Actualizar);
             this.Controls.Add(this.btnAgregarContacto);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtNombre);
@@ -125,6 +138,7 @@ namespace AgendaDB
             this.Controls.Add(this.btnProbarConexion);
             this.Name = "frmContactos";
             this.Text = "Contactos";
+            this.Load += new System.EventHandler(this.frmContactos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtvContactos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -140,5 +154,6 @@ namespace AgendaDB
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnAgregarContacto;
+        private System.Windows.Forms.Button Actualizar;
     }
 }
